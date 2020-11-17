@@ -95,7 +95,7 @@ easy-to-read plain text into HTML.
 
 ## HTML
 
-* An HTML document is a text document with with so-called
+* An HTML document (`.html`) is a text document with with so-called
 [HTML elements](https://en.wikipedia.org/wiki/HTML_element) that tell a
 web browser how to display the text.
 
@@ -210,8 +210,8 @@ List of some <a href="https://en.wikipedia.org/wiki/Vampyrella">Vampyrella</a> s
 
 ## Markdown
 
-* In Markdown you write text in simple way with a few elements of essential
-formatting syntax.
+* In Markdown documents (`.md`) you write text in a simple way with a few elements
+of essential formatting syntax.
 
 * Markdown syntax elements are readable as you write them and, at the same time,
 Markdown processor software use them to provide format when convering into HTML or PDF.
@@ -304,6 +304,49 @@ nourishment.
 <img src="vampyrella.jpg" width="96%">
 ]
 
+
+---
+
+## YAML
+
+* [YAML](https://en.wikipedia.org/wiki/YAML) is the recursive acronym for
+"YAML ain't markup language" and a syntax for specifying pairs of keyword-value
+typically used to store data and to provide configuration files (`.yml`) or
+headers in Markdown documents.
+
+* YAML serves a similar purpose than the
+[extensible markup language (XML)](https://en.wikipedia.org/wiki/XML) but with
+a lighter syntax; find [here](https://yaml.org/spec) its official specification.
+
+.left-column[
+
+<p style="text-align:center"><b>XML</b></p>
+
+```<Organisms>```<br>
+&nbsp;&nbsp;&nbsp;```<organism>```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<phylum>Cercozoa</phylum>```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<class>Proteomysidae</class>```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<order>Aconchulinida</order>```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<family>Vampyrellidae</family>```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<genus>Vampyrella</genus>```<br>
+&nbsp;&nbsp;&nbsp;```</organism>```<br>
+```</Organisms>```<br>
+
+]
+
+.right-column[
+
+<p style="text-align:center"><b>YAML</b></p>
+
+<pre style="margin-left:30px">
+Organisms:
+  - phylum: Cercozoa
+    class: Proteomysidae
+    order: Aconchulinida
+    family: Vampyrellidae
+    genus: Vampyrella
+</pre>
+]
 
 ---
 
