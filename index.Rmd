@@ -5,6 +5,7 @@
     xaringan::moon_reader:
       nature:
         beforeInit: js/macros.js
+        countIncrementalSlides: false
       self_contained: true
       css: [default, default-fonts, ninjutsu, css/upf.css]
       seal: false
@@ -26,15 +27,15 @@ class: title-slide, middle, center
 
 ## Robert Castelo
 [robert.castelo@upf.edu](mailto:robert.castelo@upf.edu)
-### Dept. of Experimental and Health Sciences
+### Dept. of Medicine and Life Sciences
 ### Universitat Pompeu Fabra
 
 <br>
 
 ## Fundamentals of Computational Biology
 ### BSc on Human Biology
-### UPF School of Health and Life Sciences
-### Academic Year 2021-2022
+### UPF School of Medicine and Life Sciences
+### Academic Year 2024-2025
 
 ---
 
@@ -125,9 +126,9 @@ easy-to-read plain text into HTML.
 ]
 .right-column[
 <p style="margin-top: 0px">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.boldface[This text is in boldface]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**This text is in boldface**
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.italics[This text is in italics]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*This text is in italics*
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This line is<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;broken.
 ]
@@ -161,7 +162,7 @@ nourishment.
 <h3 style="font-family:arial; font-weight:bold; color:black; margin-top:-10px; margin-left:25px">Creepy biology</h3>
 
 <p style="font-size:100%; margin-top:-20px; margin-left:30px">
-<i>.boldface[Vampyrella]</i> is an amoebae with a particular feeding behaviour
+<i><b>Vampyrella</b></i> is an amoebae with a particular feeding behaviour
 of perforating the cell wall of algal cells and drawing out the contents for
 nourishment.
 <br><br>
@@ -309,7 +310,7 @@ nourishment.
 <h3 style="font-family:arial; font-weight:bold; color:black; margin-top:-10px; margin-left:25px">Creepy biology</h3>
 
 <p style="font-size:100%; margin-top:-20px; margin-left:30px">
-<i>.boldface[Vampyrella]</i> is an amoebae with a particular feeding behaviour
+<i><b>Vampyrella</b></i> is an amoebae with a particular feeding behaviour
 of perforating the cell wall of algal cells and drawing out the contents for
 nourishment.
 <br><br>
@@ -351,8 +352,8 @@ Image and text taken from
 * [YAML](https://en.wikipedia.org/wiki/YAML) is the recursive acronym for
 "YAML ain't markup language" and a syntax for specifying pairs of keyword-value
 typically used to store data and to provide configuration files (`.yml`) or
-headers in Markdown documents.
-
+headers in Markdown documents.  
+&nbsp;&nbsp;
 * YAML serves a similar purpose than the
 [extensible markup language (XML)](https://en.wikipedia.org/wiki/XML) but with
 a lighter syntax; find [here](https://yaml.org/spec) its official specification.
@@ -360,6 +361,8 @@ a lighter syntax; find [here](https://yaml.org/spec) its official specification.
 .left-column[
 
 <p style="text-align:center"><b>XML</b></p>
+
+.font14px[
 
 ```<Organisms>```<br>
 &nbsp;&nbsp;&nbsp;```<organism>```<br>
@@ -370,6 +373,8 @@ a lighter syntax; find [here](https://yaml.org/spec) its official specification.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```<genus>Vampyrella</genus>```<br>
 &nbsp;&nbsp;&nbsp;```</organism>```<br>
 ```</Organisms>```<br>
+
+]
 
 ]
 
