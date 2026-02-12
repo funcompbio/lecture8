@@ -148,7 +148,7 @@ class: title-slide, middle, center
   ![:scale 40%](img/Proportions.png)
 
 .footer[
-Images from [Claus O. Wilke's book "Fundamentals of Data Visualization"](https://clauswilke.com/dataviz/)]
+Images from [Claus O. Wilke's book "Fundamentals of Data Visualization"](https://clauswilke.com/dataviz/)
 ]
 
 ---
