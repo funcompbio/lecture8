@@ -1,5 +1,5 @@
 ---
-  title: "Plotting with R"
+  title: "Data visualization with R"
   author: Robert Castelo
   output:
     xaringan::moon_reader:
@@ -12,15 +12,15 @@
 ---
 
 ```{r setup, include=FALSE, cache=FALSE}
-options(htmltools.dir.version = FALSE, width=80)
+options(htmltools.dir.version = FALSE, width=80, continue="  ")
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       cache=TRUE,
                       comment = "",
-                      prompt=TRUE,
-                      include=FALSE,
-                      echo=FALSE,
-                      fig.path="img/")
+                      prompt = FALSE,
+                      include = FALSE,
+                      echo = FALSE,
+                      fig.path = "img/")
 
 ## from http://yihui.name/knitr/hooks#chunk_hooks
 knitr::knit_hooks$set(small.mar=function(before, options, envir) {
@@ -30,7 +30,7 @@ knitr::knit_hooks$set(small.mar=function(before, options, envir) {
 
 class: title-slide, middle, center
 
-# Plotting with R
+# Data visualization with R
 
 ## Robert Castelo
 [robert.castelo@upf.edu](mailto:robert.castelo@upf.edu)
@@ -46,128 +46,243 @@ class: title-slide, middle, center
 
 ---
 
-## Generic plot types in R
+## Data visualization
 
-* The basic plotting function in R is `plot()`.  
+* Data visualization is the transformation of data into a visual representation
+  that **accurately** and **effectively** communicates information.  
   &nbsp;&nbsp;
-* The first element (`x`) is what will be represented in the x axis and the 
-  second element (`y`) what will be shown in the y axis.  
+* When it **accurately** reveals patterns, trends or outliers in the data
+  that may not be apparent from raw values, it becomes a powerful tool for data
+  analysis and exploration.  
   &nbsp;&nbsp;
-* You can specify the type of plot that should be drawn using the argument `type`.
-  Some examples are: `type = "p"` for points, `type = "l"` for lines or `type="b"`
-  for both.
-  <pre>
-  plot(x=iris$Sepal.Length, y=iris$Sepal.Width, type="p") 
-  </pre>
-```{r example-plot, out.width="70%", include=TRUE, fig.asp=.6}
-plot(x=iris$Sepal.Length, y=iris$Sepal.Width, type="p")
+* When it makes complex information more accessible and easier to understand,
+  it becomes an **effective** way to communicate data insights to others.
+
+---
+
+## Data visualization
+
+* [John Tukey (1915-2000)](https://en.wikipedia.org/wiki/John_Tukey), one of the
+  most important contributors to the field of statistics and data analysis, who
+  introduced the
+  [box plot](https://en.wikipedia.org/wiki/Box_plot) and also coined computer
+  science terminology such as [bit](https://en.wikipedia.org/wiki/Bit) or
+  [software](https://en.wikipedia.org/wiki/Software), once said:
+  > "The greatest value of a picture is when it forces us to notice what we never expected to see."  
+  &nbsp;&nbsp;
+* This quote highlights the power of data visualization to reveal insights and patterns
+  that may not be immediately apparent from raw data, and emphasizes the importance
+  of using visual representations to explore and understand complex datasets. See
+  [John Tukey's obituary](https://doi.org/10.1063/1.1397408) for more information about
+  his life and contributions to statistics and data analysis.
+
+---
+
+## Data visualization
+
+.pull-left[
+* [John Snow (1813-1858)](https://en.wikipedia.org/wiki/John_Snow) is considered
+  one of the founders of epidemiology, and is best known for identifying the source
+  of a [cholera](https://en.wikipedia.org/wiki/Cholera) outbreak in
+  London in the mid-19th century.  
+  &nbsp;&nbsp;
+* He was born to a poor family in York, but already at a young age he
+  showed an aptitude for mathematics and science, which led him to pursue
+  a career in medicine, first in Newcastle and later in London.  
+  &nbsp;&nbsp;
+* As a young apprentice to a surgeon, Snow treated patients with cholera, which
+  was a common and deadly disease in the 19th century.
+]
+
+.pull-right[
+![JohnSnow](img/JohnSnow.jpg)
+]
+
+---
+
+## Data visualization
+
+* In 1854, a severe cholera outbreak occurred near Broad Street in London, killing
+  over 600 people in just a few days. Snow tallied the number of deaths from
+  cholera in the area and plotted them on a map, along with the locations of water
+  pumps and was able to identify a cluster of cases around a
+  particular water pump.
+
+![SnowCholearMap](img/SnowCholeraMap.jpg)
+
+---
+
+## Data visualization
+
+* Snow's map provided strong evidence that the cholera outbreak was linked to
+  contaminated water from the Broad Street pump, disproving the prevailing
+  [miasma theory](https://en.wikipedia.org/wiki/Miasma_theory) of disease
+  transmission at the time, and his work helped to establish the importance of
+  clean water and sanitation in preventing the spread of disease.  
+  &nbsp;&nbsp;
+* Snow's use of data visualization to identify the source of the cholera
+  outbreak is considered a landmark moment in the history of epidemiology and
+  public health, and his map is often cited as an early example of the power of
+  data visualization to reveal insights and inform public health interventions.  
+  &nbsp;&nbsp;
+* See
+  [Paneth N. and Fine P., The singular science of John Snow, *The Lancet*, 2013](https://doi.org/10.1016/S0140-6736%2813%2960829-6),
+  for more information about Snow's life and contributions to epidemiology and
+  public health.  
+
+---
+
+## Basic types of visualization
+
+* **Relationships**: Scatterplots, line plots, etc.
+
+  ![:scale 20%](img/Relationships.png)
+* **Distributions**: Histograms, density plots, box plots, etc.
+
+  ![:scale 40%](img/Distributions.png)
+* **Amounts**: Bar plots, stacked bars, dots, etc.
+
+  ![:scale 35%](img/Amounts.png)
+* **Proportions**: Bar plots, stacked bars, pie charts, etc.  
+
+  ![:scale 40%](img/Proportions.png)
+
+.footer[
+Images from [Claus O. Wilke's book "Fundamentals of Data Visualization"](https://clauswilke.com/dataviz/)]
+]
+
+---
+
+## Basic types of visualization in R
+
+* We will use the `iris` dataset on the taxonomic characteristics of iris flowers used by
+  [Fisher (1936)](https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1469-1809.1936.tb02137.x)
+  to introduce certain statistical concepts. It contains measurements of the
+  flowers of fifty plants for each of the three species _Iris setosa_,
+  _Iris versicolor_ and _Iris virginica_.
+<pre>                 
+head(iris)          
+      Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+levels(iris$Species)
+[1] "setosa"     "versicolor" "virginica" 
+</pre>
+
+
+---
+
+## Visualizing relationships in R
+
+* The basic plotting function in R is `plot()`, which can be used to create a
+  wide variety of plots, including scatterplots, line plots, and more.
+```{r relationships-plot, echo=TRUE, out.width="60%", include=TRUE, dpi=100, fig.height=5}
+plot(iris$Sepal.Length, iris$Sepal.Width, type="p", xlab="Sepal length", ylab="Sepal width", cex.lab=1.5)
+```
+* It is important to label the axes in plain language and large enough to be readable.
+
+---
+
+## Visualizing relationships in R
+
+* Coloring the points by a categorical variable can help to reveal patterns in
+  the data that may not be apparent when all points are the same color.  
+```{r relationships2-plot, echo=TRUE, out.width="60%", include=TRUE, dpi=100, fig.height=5}
+plot(iris$Sepal.Length, iris$Sepal.Width, type="p", xlab="Sepal length", ylab="Sepal width", cex.lab=1.5, pch=19, col=c("red", "blue", "green")[iris$Species])
+legend("topright", legend=levels(iris$Species), col=c("red", "blue", "green"), pch=19, inset=0.01)
 ```
 
 ---
 
-## Modifying plot graphical parameters
+## Visualizing distributions in R
 
-* There are many graphical parameters that can be changed to make the plots more
-  attractive, such as the axis labels or the coloring.  
-  &nbsp;&nbsp;
-* A list can be found at the `plot()` function documentation: `?graphics::plot`
-  <pre>
-  plot(x=iris$Sepal.Length, y=iris$Sepal.Width, type="p",
-         xlab = "Iris sepal length", ylab = "Iris sepal width",
-         pch = 19, cex = 1.5,
-         col=c("red", "blue", "green")[iris$Species])
-  </pre>
-
-```{r example-plot-mod, out.width="70%", include=TRUE, fig.asp=.6}
-plot(x=iris$Sepal.Length, y=iris$Sepal.Width, type="p", 
-     xlab = "Iris sepal length", ylab = "Iris sepal width",
-     main = "Scatterplot",
-     pch = 19, cex = 1.5,
-     col=c("red", "blue", "green")[iris$Species]) # Only works when the variable is a FACTOR
+* A histogram is a graphical representation of the distribution of a continuous
+  variable, where the data is divided into bins and the frequency of observations
+  in each bin is represented by the height of a bar. Histograms can be produced in
+  R using the `hist()` function.
+```{r histogram-plot, echo=TRUE, include=TRUE, out.width="60%", dpi=100, fig.height=5}
+hist(iris$Sepal.Length, xlab="Sepal length", ylab="Frequency", main="", col="lightblue", cex.lab=1.5)
 ```
 
 ---
 
-## Modifying plot graphical parameters
-
-* `xlab` and `ylab`. Titles for the x and y axes, respectively.  
-  &nbsp;&nbsp;
-* `main`. Title for the plot.  
-  &nbsp;&nbsp;
-* `pch`. Shape of the points (full description at `? pch`)
-
-![](img/pch.png)
-
-* `cex`. Number indicating how much the symbols should be scaled relative to the
-  default.  
-  &nbsp;&nbsp;
-* `col`. Colors for the lines and points. You can specify a single or multiple 
-  colors (one for each point).
-
----
-
-## Other types of plots
-
-* A [_bar plot_, or bar chart,](https://en.wikipedia.org/wiki/Bar_chart)
-  is used to represent a categorical variable such as a factor in the 
-  x axis and a numeric value in the y axis.  
-  &nbsp;&nbsp;
-* The R function `barplot()` creates a bar plot with vertical or horizontal
-  bars by just providing their height as a vector. The vector names will be
-  used to plot the x axis labels.
-  <pre>
-  barplot(table(iris$Species), col=2:4, 
-            xlab="Species", ylab="Number of observations")
-  </pre>
-
-```{r barplot-example, include=TRUE, out.width="50%", fig.asp=.85}
-barplot(table(iris$Species), col=2:4, xlab="Species", ylab="Number of observations")
-```
-
-
----
-
-## Other types of plots
+## Visualizing distributions in R
 
 * A [_box plot_](https://en.wikipedia.org/wiki/Box_plot)
   is used to plot the location, spread and skewness of a continuous (numerical)
-  variable over different groups (factors).  
-  &nbsp;&nbsp;
-* The R function `boxplot()` produces this specific plot, by providing a
-  formula `y ~ grp`, where`y` is a numeric vector and `grp` is a grouping
-  variable (usually a factor).
-  <pre>
-  boxplot(iris$Sepal.Length ~ iris$Species, col=2:4, 
-            xlab = "Species", ylab = "Sepal length")
-  </pre>
-
-```{r boxplot-example, include=TRUE, out.width="50%", fig.asp=.85}
-boxplot(iris$Sepal.Length ~ iris$Species, col=2:4, 
-        xlab = "Species", ylab = "Sepal length")
+  variable over different groups (factors). The R function `boxplot()` produces
+  this specific plot, by providing a formula `y ~ grp`, where `y` is a numeric
+  vector and `grp` is a grouping variable (usually a factor).
+```{r boxplot-example, echo=TRUE, include=TRUE, out.width="60%", dpi=100, fig.height=5}
+boxplot(iris$Sepal.Length ~ iris$Species, xlab = "Species", ylab = "Sepal length", cex.lab=1.5)
 ```
 
+
+---
+
+## Visualizing amounts in R
+
+* A [_bar plot_, or bar chart,](https://en.wikipedia.org/wiki/Bar_chart)
+  is used to represent a categorical variable such as a factor in the 
+  x axis and a numeric value (e.g., an amount) in the y axis. The R
+  function `barplot()` creates a bar plot with vertical or horizontal
+  bars by just providing their height as a vector. The vector names will be
+  used to plot the x axis labels.
+```{r barplot-example, echo=TRUE, include=TRUE, out.width="60%", dpi=100, fig.height=5}
+barplot(table(iris$Species), xlab="Species", ylab="Number of observations")
+```
+
+---
+
+## Visualizing proportions in R
+
+* A [_pie chart_](https://en.wikipedia.org/wiki/Pie_chart) is a circular statistical
+  graphic, which is divided into slices to illustrate numerical proportion. The R
+  function `pie()` creates a pie chart by providing the size of each slice as a
+  vector. The vector names will be used to plot the labels.
+```{r pie-chart-example, echo=TRUE, include=TRUE, out.width="50%", dpi=100, fig.height=5, small.mar=TRUE}
+pie(table(iris$Species), col=c("red", "blue", "green"), cex=1.5)
+```
+* However, pie charts are not recommended for data visualization, as angles can be
+  difficult to interpret and thus comparing the sizes of the slices accurately. Bar
+  plots or other types of visualizations are often more effective for showing
+  proportions.
 
 ---
 
 ## Combine plots using `par()`
 
-* The function `par()` allows setting or inquiring about some specific graphical
-  parameters, explained in the help section `?par`.  
-  &nbsp;&nbsp;
-* We can specify the number of subplots we need using the argument `mfrow = c(nr, nc)`, 
-  where `nr` are the number of rows and nc` the number of columns you want to 
-  divide your device into.
-  <pre>
-  par(mfrow=c(1,2))
-  barplot(table(iris$Species), col=2:4, cex.names=.9)
-  boxplot(iris$Sepal.Length ~ iris$Species, col=2:4, cex.axis=.85)
-  </pre>
-
-```{r combine-plots, include=TRUE, out.width="70%", fig.asp=.5, small.mar=TRUE}
+* The function `par()` allows setting some specific graphical
+  parameters. We can specify the number of subplots we need using the argument `mfrow = c(nr, nc)`,
+  where `nr` and `nc` are the number of rows and columns of the subplot grid.
+```{r combine-plots, echo=TRUE, include=TRUE, out.width="70%", dpi=100, fig.height=4, fig.width=8, small.mar=TRUE}
 par(mfrow=c(1,2))
-barplot(table(iris$Species), col=2:4, cex.names=.9)
-boxplot(iris$Sepal.Length ~ iris$Species, col=2:4, cex.axis=.85)
+hist(iris$Sepal.Length, xlab="Sepal length", ylab="Frequency", main="", col="lightblue", cex.lab=1.5)
+boxplot(iris$Sepal.Length ~ iris$Species, xlab = "Species", ylab = "Sepal length", cex.lab=1.5)
 ```
+
+---
+
+## Some basic guidelines for data visualization
+
+* Use the appropriate type of plot for the data and the insight you want to communicate.  
+  &nbsp;&nbsp;
+* Label axes and legends clearly and use readable font sizes.  
+  &nbsp;&nbsp;
+* Use color effectively to highlight important information, but avoid using too
+  many colors or using colors that are difficult to distinguish. About one every
+  20 people have some form of color blindness, so you may want to consider using
+  color palettes that are color-blind friendly.  
+  &nbsp;&nbsp;
+* Avoid cluttering the plot with unnecessary elements, such as gridlines or
+  background colors, that can distract from the main message.  
+  &nbsp;&nbsp;
+* Avoid distorting the data by using inappropriate scales or axes. A plot with
+  a lot of white space may indicate the use of an inappropriate scale.
 
 ---
 
@@ -226,13 +341,20 @@ this course.
 
 ## Concluding remarks
 
-* There are different functions to produce plots in R. The one you use will 
-  depend on the type of data you have.  
+* Data visualization is a powerful tool for exploring and understanding data, and
+  for communicating insights to others, when doing it accurately and effectively.  
+  &nbsp;&nbsp;
+* There are many different functions to produce plots in R. You should choose one
+  depending on the insight you want to communicate and the type of data you have.  
   &nbsp;&nbsp;
 * Additional graphical parameters can be modified by providing them as 
   arguments to the plotting functions.  
   &nbsp;&nbsp;
-* You can combine plots side-by-side by using the function _par()_.
+* You can combine plots side-by-side by using the function `par(nr, nc)`.  
+  &nbsp;&nbsp;
+* Attempt following basic visualization guidelines to make your plots more
+  effective; see for instance
+  [Claus O. Wilke's book "Fundamentals of Data Visualization"](https://clauswilke.com/dataviz/).
 
 <!--
 
